@@ -989,6 +989,47 @@
     .footer-top-btn svg { transition: transform 0.3s ease; }
     .footer-top-btn:hover svg { transform: translateY(-3px); }
 
+
+    /* ═══════════════════════════════════════
+       REFLECTIONS
+    ═══════════════════════════════════════ */
+    .reflections { background-color: var(--warm-sand); }
+    .reflections-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    .reflection-card {
+      background: rgba(15,45,58,0.04);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.8rem, 3vw, 2.5rem);
+      margin: 0;
+      border-top: 2px solid var(--sea-glass);
+    }
+    .reflection-card blockquote {
+      margin: 0 0 1.2rem 0;
+      padding: 0;
+    }
+    .reflection-card blockquote p {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--deep-current);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .reflection-card figcaption {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sea-glass);
+    }
+    @media (max-width: 768px) {
+      .reflections-grid { grid-template-columns: 1fr; }
+    }
     /* ═══════════════════════════════════════
        SCROLL REVEAL
     ═══════════════════════════════════════ */
@@ -1357,6 +1398,47 @@ Both deserve attention.</p>
     <div style="text-align:center; margin-top: clamp(2.5rem, 4vw, 3.5rem);">
       <a href="#contact" class="btn btn-primary">Let's Talk →</a>
     </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════════════
+     REFLECTIONS
+════════════════════════════════════════ -->
+<section class="reflections section-pad" id="reflections">
+  <div class="container">
+
+    <div class="reflections-header reveal" style="margin-bottom: clamp(3rem, 5vw, 4.5rem);">
+      <span class="eyebrow" style="color: var(--sea-glass); margin-bottom: 1.2rem; display:block;">Reflections</span>
+      <h2 class="d-lg" style="margin-bottom: 0.8rem;">What people notice.</h2>
+      <p style="color: rgba(15,45,58,0.5); font-size: clamp(0.93rem, 1.4vw, 1.04rem);">The same qualities tend to come up in different conversations.</p>
+    </div>
+
+    <div class="reflections-grid">
+
+      <figure class="reflection-card reveal">
+        <blockquote>
+          <p>"In conversation, Koda is genuinely curious. She asks thoughtful questions, stays fully present, and makes you feel like she's truly listening."</p>
+        </blockquote>
+        <figcaption>Thalea, Friend &amp; Former Coach</figcaption>
+      </figure>
+
+      <figure class="reflection-card reveal reveal-d2">
+        <blockquote>
+          <p>"Koda has a way of asking questions that make you think more deeply about yourself. She's incredibly good at keeping a conversation flowing, no matter the situation."</p>
+        </blockquote>
+        <figcaption>Alex, Partner</figcaption>
+      </figure>
+
+      <figure class="reflection-card reveal reveal-d3">
+        <blockquote>
+          <p>"Koda brings openness to every conversation and a genuine interest in the person she's speaking with."</p>
+        </blockquote>
+        <figcaption>Galya, Friend</figcaption>
+      </figure>
+
+    </div>
+
   </div>
 </section>
 
