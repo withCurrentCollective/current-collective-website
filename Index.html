@@ -994,17 +994,29 @@
        REFLECTIONS
     ═══════════════════════════════════════ */
     .reflections { background-color: var(--warm-sand); }
-    .reflections-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(1.5rem, 3vw, 2.5rem);
+    .reflections-carousel-wrap {
+      position: relative;
     }
+    .reflections-grid {
+      display: flex;
+      gap: clamp(1.2rem, 2vw, 1.8rem);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      cursor: grab;
+      padding-bottom: 0.5rem;
+    }
+    .reflections-grid::-webkit-scrollbar { display: none; }
+    .reflections-grid.is-dragging { cursor: grabbing; user-select: none; }
     .reflection-card {
       background: rgba(15,45,58,0.04);
       border-radius: var(--radius-lg);
       padding: clamp(1.8rem, 3vw, 2.5rem);
       margin: 0;
       border-top: 2px solid var(--sea-glass);
+      flex: 0 0 clamp(280px, 38vw, 420px);
+      scroll-snap-align: start;
     }
     .reflection-card blockquote {
       margin: 0 0 1.2rem 0;
@@ -1012,11 +1024,11 @@
     }
     .reflection-card blockquote p {
       font-family: var(--font-display);
-      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
       font-weight: 400;
       font-style: italic;
       color: var(--deep-current);
-      line-height: 1.6;
+      line-height: 1.65;
       margin: 0;
     }
     .reflection-card figcaption {
@@ -1027,8 +1039,33 @@
       text-transform: uppercase;
       color: var(--sea-glass);
     }
+    .reflections-nav {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .reflections-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(15,45,58,0.2);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep-current);
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+    }
+    .reflections-btn:hover {
+      background: var(--deep-current);
+      color: var(--white);
+      border-color: var(--deep-current);
+    }
     @media (max-width: 768px) {
-      .reflections-grid { grid-template-columns: 1fr; }
+      .reflection-card { flex: 0 0 85vw; }
+      .reflections-nav { display: none; }
     }
     /* ═══════════════════════════════════════
        SCROLL REVEAL
@@ -1409,55 +1446,62 @@ Both deserve attention.</p>
   <div class="container">
 
     <div class="reflections-header reveal" style="margin-bottom: clamp(3rem, 5vw, 4.5rem);">
-      <span class="eyebrow" style="color: var(--sea-glass); margin-bottom: 1.2rem; display:block;">Reflections</span>
-      <h2 class="d-lg" style="margin-bottom: 0.8rem;">What people notice.</h2>
-      <p style="color: rgba(15,45,58,0.5); font-size: clamp(0.93rem, 1.4vw, 1.04rem);">The same qualities tend to come up in different conversations.</p>
+      <span class="eyebrow" style="color: var(--sea-glass); margin-bottom: 1.2rem; display:block;">What people notice</span>
+      <h2 class="d-lg" style="margin-bottom: 0.8rem;">In conversation.</h2>
+      <p style="color: rgba(15,45,58,0.5); font-size: clamp(0.93rem, 1.4vw, 1.04rem);">A few reflections from people who know me well.</p>
     </div>
 
-    <div class="reflections-grid">
+    <div class="reflections-carousel-wrap">
+    <div class="reflections-grid" id="reflections-grid">
 
       <figure class="reflection-card reveal">
         <blockquote>
-          <p>"When we talk to each other, I genuinely feel that you're listening to every word I say and that you care."</p>
+          <p>When we talk to each other, I genuinely feel that you're listening to every word I say and that you care.</p>
         </blockquote>
         <figcaption>Justine, Friend</figcaption>
       </figure>
 
       <figure class="reflection-card reveal reveal-d2">
         <blockquote>
-          <p>"One thing that really stands out about Koda is how she makes me feel genuinely heard. She notices the smallest changes in my tone or wording and always seems to understand how I'm doing or feeling."</p>
+          <p>One thing that really stands out about Koda is how she makes me feel genuinely heard. She notices the smallest changes in my tone or wording and always seems to understand how I'm doing or feeling.</p>
         </blockquote>
         <figcaption>Rob, Friend</figcaption>
       </figure>
 
       <figure class="reflection-card reveal reveal-d3">
         <blockquote>
-          <p>"Koda has a calm presence that helps you relax. She's a great listener."</p>
+          <p>Koda has a calm presence that helps you relax. She's a great listener.</p>
         </blockquote>
         <figcaption>Anna, Friend</figcaption>
       </figure>
 
       <figure class="reflection-card reveal reveal-d1">
         <blockquote>
-          <p>"Koda has a way of asking questions that make you think more deeply about yourself. She's incredibly good at keeping a conversation flowing, no matter the situation."</p>
+          <p>Koda has a way of asking questions that make you think more deeply about yourself. She's incredibly good at keeping a conversation flowing, no matter the situation.</p>
         </blockquote>
         <figcaption>Alex, Partner</figcaption>
       </figure>
 
       <figure class="reflection-card reveal reveal-d2">
         <blockquote>
-          <p>"In conversation, Koda is genuinely curious. She asks thoughtful questions, stays fully present, and makes you feel like she's truly listening."</p>
+          <p>In conversation, Koda is genuinely curious. She asks thoughtful questions, stays fully present, and makes you feel like she's truly listening.</p>
         </blockquote>
         <figcaption>Thalea, Friend &amp; Former Coach</figcaption>
       </figure>
 
       <figure class="reflection-card reveal reveal-d3">
         <blockquote>
-          <p>"Koda brings openness to every conversation and a genuine interest in the person she's speaking with."</p>
+          <p>Koda brings openness to every conversation and a genuine interest in the person she's speaking with.</p>
         </blockquote>
         <figcaption>Galya, Friend</figcaption>
       </figure>
 
+    </div>
+    </div>
+
+    <div class="reflections-nav">
+      <button class="reflections-btn" id="refl-prev" aria-label="Previous">&#8592;</button>
+      <button class="reflections-btn" id="refl-next" aria-label="Next">&#8594;</button>
     </div>
 
   </div>
@@ -1477,7 +1521,7 @@ Both deserve attention.</p>
   </div>
   <div class="ocean-quote-overlay">
     <div class="ocean-quote-text reveal">
-      <p>"Change doesn't always look like a breakthrough. Sometimes it looks like a quiet afternoon where something finally settles."</p>
+      <p>Change doesn't always look like a breakthrough. Sometimes it looks like a quiet afternoon where something finally settles.</p>
       <cite>Current Collective</cite>
     </div>
   </div>
@@ -1796,5 +1840,34 @@ Both deserve attention.</p>
 })();
 </script>
 
+
+  <script>
+    /* ── Reflections carousel ── */
+    (function () {
+      const grid = document.getElementById('reflections-grid');
+      if (!grid) return;
+
+      /* Arrow buttons */
+      const prev = document.getElementById('refl-prev');
+      const next = document.getElementById('refl-next');
+      const cardWidth = () => grid.querySelector('.reflection-card').offsetWidth + 24;
+      if (prev) prev.addEventListener('click', () => grid.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+      if (next) next.addEventListener('click', () => grid.scrollBy({ left:  cardWidth(), behavior: 'smooth' }));
+
+      /* Click-and-drag */
+      let isDown = false, startX, scrollLeft;
+      grid.addEventListener('mousedown', e => {
+        isDown = true; grid.classList.add('is-dragging');
+        startX = e.pageX - grid.offsetLeft; scrollLeft = grid.scrollLeft;
+      });
+      grid.addEventListener('mouseleave', () => { isDown = false; grid.classList.remove('is-dragging'); });
+      grid.addEventListener('mouseup',    () => { isDown = false; grid.classList.remove('is-dragging'); });
+      grid.addEventListener('mousemove',  e => {
+        if (!isDown) return; e.preventDefault();
+        const x = e.pageX - grid.offsetLeft;
+        grid.scrollLeft = scrollLeft - (x - startX) * 1.2;
+      });
+    })();
+  </script>
 </body>
 </html>
