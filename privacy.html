@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy | Current Collective</title>
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://withcurrentcollective.com/privacy">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --deep-current: #0F2D3A;
+      --sea-glass:    #7E9D98;
+      --warm-sand:    #F5F1E8;
+      --font-display: 'Manrope', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--warm-sand);
+      color: var(--deep-current);
+      line-height: 1.75;
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245,241,232,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(15,45,58,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 64px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--deep-current);
+    }
+    .nav-back {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--sea-glass);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--deep-current); }
+
+    /* CONTENT */
+    .privacy-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 3rem);
+    }
+
+    .privacy-eyebrow {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sea-glass);
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--deep-current);
+      margin-bottom: 0.75rem;
+    }
+
+    .privacy-date {
+      font-size: 0.82rem;
+      color: rgba(15,45,58,0.4);
+      margin-bottom: 3rem;
+      border-bottom: 1px solid rgba(15,45,58,0.1);
+      padding-bottom: 2rem;
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--deep-current);
+      margin: 2.5rem 0 0.75rem;
+    }
+
+    p {
+      font-size: 0.96rem;
+      color: rgba(15,45,58,0.65);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    ul li {
+      font-size: 0.96rem;
+      color: rgba(15,45,58,0.65);
+      line-height: 1.85;
+      margin-bottom: 0.4rem;
+    }
+
+    a { color: var(--sea-glass); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .privacy-note {
+      background: rgba(126,157,152,0.1);
+      border-left: 3px solid var(--sea-glass);
+      border-radius: 0 8px 8px 0;
+      padding: 1.2rem 1.5rem;
+      margin: 2rem 0;
+    }
+    .privacy-note p {
+      margin: 0;
+      font-style: italic;
+    }
+
+    /* FOOTER */
+    .privacy-footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      border-top: 1px solid rgba(15,45,58,0.08);
+      margin-top: 4rem;
+    }
+    .privacy-footer p {
+      font-size: 0.8rem;
+      color: rgba(15,45,58,0.3);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <svg width="24" height="22" viewBox="0 0 90 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.63 42.18C4.26 45.14 6.03 46.15 6.56 45.36C10.39 40.59 18.94 30.66 22.43 29.22C22.91 29.22 24.25 28.9 25.74 27.63C27.59 26.05 39.23 19.43 40.15 24.72C40.15 30.61 40.15 42.45 44.78 41.65L55.49 39.8C56.82 39.27 57.03 40.88 56.82 46.94C56.82 48.79 58.3 51.81 61.58 51.18C65.5 50.38 72.82 47.47 70.04 43.77C69.45 43.18 58.67 50.18 60.12 39.8C61.02 33.45 58.77 32.39 53.91 34.51C46.5 36.36 42.21 39.27 43.59 25.52C43.9 22.17 43.39 16.54 38.83 16.26C30.76 15.73 9.47 31.6 5.63 42.18Z" fill="#7E9D98"/>
+        <path d="M1.13 46.41C-0.72 48.79 -0.32 54.61 2.46 50.91C4.18 49.32 3.67 43.98 1.13 46.41Z" fill="#7E9D98"/>
+      </svg>
+      Current Collective
+    </a>
+    <a href="/" class="nav-back">← Back to site</a>
+  </nav>
+
+  <div class="privacy-wrap">
+
+    <span class="privacy-eyebrow">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="privacy-date">Last updated: July 2026</p>
+
+    <div class="privacy-note">
+      <p>This is a plain-English privacy policy. Current Collective is a small coaching practice — not a large corporation. This page explains honestly and simply how your information is handled.</p>
+    </div>
+
+    <h2>Who we are</h2>
+    <p>Current Collective is a one-to-one coaching practice run by Koda. You can contact us at <a href="mailto:kodaeddy04@gmail.com">kodaeddy04@gmail.com</a> or through the contact form at <a href="https://withcurrentcollective.com">withcurrentcollective.com</a>.</p>
+
+    <h2>What information we collect</h2>
+    <p>We only collect information you choose to share with us. This happens when you fill in the contact form on our website. The information collected includes:</p>
+    <ul>
+      <li>Your first and last name</li>
+      <li>Your email address</li>
+      <li>Any message or personal detail you include in your message</li>
+    </ul>
+    <p>We do not use analytics tools, advertising trackers, or any third-party data collection on this website.</p>
+
+    <h2>How we use your information</h2>
+    <p>Your information is used solely to respond to your enquiry. We will not:</p>
+    <ul>
+      <li>Add you to a mailing list without your explicit consent</li>
+      <li>Share your information with any third party</li>
+      <li>Use your information for marketing purposes</li>
+    </ul>
+
+    <h2>How your message is sent</h2>
+    <p>The contact form uses a service called FormSubmit (formsubmit.co) to forward your message to our email inbox. FormSubmit does not store your message after forwarding — it is delivered directly to our Gmail inbox and nowhere else.</p>
+
+    <h2>How long we keep your information</h2>
+    <p>Messages received via the contact form are stored in our email inbox. We aim to delete enquiries that do not lead to an ongoing coaching relationship within a reasonable time after responding. If you become a client, information is retained only for as long as necessary and in accordance with professional practice standards.</p>
+
+    <h2>Confidentiality</h2>
+    <p>Everything you share through the contact form is treated with strict confidentiality. We take the privacy of anyone reaching out seriously, particularly given the personal nature of coaching and therapy work.</p>
+
+    <h2>Cookies</h2>
+    <p>This website does not use advertising cookies, analytics cookies, or tracking of any kind. Your browser may set strictly necessary session cookies as part of normal website operation — these contain no personal information and are deleted when you close your browser.</p>
+
+    <h2>Your rights</h2>
+    <p>Under UK GDPR and the Australian Privacy Act, you have the right to:</p>
+    <ul>
+      <li>Request a copy of any personal information we hold about you</li>
+      <li>Ask us to correct inaccurate information</li>
+      <li>Ask us to delete your information</li>
+      <li>Withdraw consent at any time</li>
+    </ul>
+    <p>To exercise any of these rights, email us at <a href="mailto:kodaeddy04@gmail.com">kodaeddy04@gmail.com</a>. We will respond within 30 days.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>If we make any significant changes to this policy, we will update the date at the top of this page. We encourage you to check back occasionally.</p>
+
+    <h2>Questions</h2>
+    <p>If you have any questions about this privacy policy or how your data is handled, please get in touch at <a href="mailto:kodaeddy04@gmail.com">kodaeddy04@gmail.com</a>.</p>
+
+  </div>
+
+  <footer class="privacy-footer">
+    <p>&copy; 2026 Current Collective</p>
+  </footer>
+
+</body>
+</html>
