@@ -993,7 +993,78 @@
     /* ═══════════════════════════════════════
        REFLECTIONS
     ═══════════════════════════════════════ */
-    .reflections { background-color: var(--warm-sand); }
+    .testimonials-grid {
+      display: flex;
+      gap: clamp(1.2rem, 2vw, 1.8rem);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      cursor: grab;
+      padding-bottom: 0.5rem;
+    }
+    .testimonials-grid::-webkit-scrollbar { display: none; }
+    .testimonials-grid.is-dragging { cursor: grabbing; user-select: none; }
+    .testimonial-card {
+      background: rgba(255,255,255,0.06);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.8rem, 3vw, 2.5rem);
+      margin: 0;
+      border-top: 2px solid var(--sea-glass);
+      flex: 0 0 clamp(300px, 42vw, 520px);
+      scroll-snap-align: start;
+    }
+    .testimonial-card blockquote {
+      margin: 0 0 1.2rem 0;
+      padding: 0;
+    }
+    .testimonial-card blockquote p {
+      font-family: var(--font-body);
+      font-size: clamp(0.93rem, 1.35vw, 1.05rem);
+      font-weight: 400;
+      font-style: italic;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.75;
+      margin: 0 0 0.85rem;
+    }
+    .testimonial-card blockquote p:last-child { margin-bottom: 0; }
+    .testimonial-card figcaption {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sea-glass);
+    }
+    .testimonials-nav {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+    .testimonials-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1.1rem;
+      transition: all 0.2s ease;
+    }
+    .testimonials-btn:hover {
+      background: var(--sea-glass);
+      border-color: var(--sea-glass);
+    }
+    @media (max-width: 768px) {
+      .testimonial-card { flex: 0 0 85vw; }
+      .testimonials-nav { display: none; }
+    }
+        .reflections { background-color: var(--warm-sand); }
     .reflections-carousel-wrap {
       position: relative;
     }
@@ -1617,25 +1688,50 @@ Both deserve attention.</p>
       <h2 class="d-lg" style="margin-bottom: 0.8rem; color: var(--white);">What clients say.</h2>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: clamp(1.5rem, 3vw, 2.5rem);">
+    <div class="testimonials-carousel-wrap">
+    <div class="testimonials-grid" id="testimonials-grid">
 
-      <figure class="reveal" style="margin: 0; padding: clamp(2rem, 3.5vw, 2.8rem); background: rgba(255,255,255,0.06); border-radius: var(--radius-lg); border: 1px solid rgba(126,157,152,0.2);">
-        <blockquote style="margin: 0 0 1.6rem;">
-          <p style="font-family: var(--font-body); font-size: clamp(0.95rem, 1.4vw, 1.05rem); line-height: 1.8; color: rgba(255,255,255,0.82); font-style: italic; margin: 0 0 1rem;">&ldquo;Koda is a person who is really committed to helping you improve your mental health and providing the emotional support you need to achieve your goals.</p>
-          <p style="font-family: var(--font-body); font-size: clamp(0.95rem, 1.4vw, 1.05rem); line-height: 1.8; color: rgba(255,255,255,0.82); font-style: italic; margin: 0 0 1rem;">During our sessions, she was very caring and thoughtful. I never heard a word of judgment from her, only words of sympathy and encouragement. From the very beginning, I felt able to trust her enough to really tell her what I was going through, and I felt like she was the only person who could actually understand me. I am very thankful for that.</p>
-          <p style="font-family: var(--font-body); font-size: clamp(0.95rem, 1.4vw, 1.05rem); line-height: 1.8; color: rgba(255,255,255,0.82); font-style: italic; margin: 0;">&rdquo;Overall, after a couple of sessions, with her support, I was able to find the strength to step out of my depressive episode and finally start doing something that I hadn&rsquo;t been able to do for a very long time.&rdquo;</p>
+      <figure class="testimonial-card">
+        <blockquote>
+          <p>&ldquo;Koda is a person who is really committed to helping you improve your mental health and providing the emotional support you need to achieve your goals.</p>
+          <p>During our sessions, she was very caring and thoughtful. I never heard a word of judgment from her, only words of sympathy and encouragement. From the very beginning, I felt able to trust her enough to really tell her what I was going through, and I felt like she was the only person who could actually understand me. I am very thankful for that.</p>
+          <p>After a couple of sessions, with her support, I was able to find the strength to step out of my depressive episode and finally start doing something that I hadn&rsquo;t been able to do for a very long time.&rdquo;</p>
         </blockquote>
-        <figcaption style="font-family: var(--font-display); font-size: 0.88rem; font-weight: 600; color: var(--sea-glass); letter-spacing: 0.06em; text-transform: uppercase;">Taya &mdash; Client</figcaption>
+        <figcaption>Taya &mdash; Client</figcaption>
       </figure>
 
-      <figure class="reveal reveal-d2" style="margin: 0; padding: clamp(2rem, 3.5vw, 2.8rem); background: rgba(255,255,255,0.06); border-radius: var(--radius-lg); border: 1px solid rgba(126,157,152,0.2);">
-        <blockquote style="margin: 0 0 1.6rem;">
-          <p style="font-family: var(--font-body); font-size: clamp(0.95rem, 1.4vw, 1.05rem); line-height: 1.8; color: rgba(255,255,255,0.82); font-style: italic; margin: 0 0 1rem;">&ldquo;I started working with Koda at a point where I had already made a lot of big changes in my life, but there were still parts of myself I hadn&rsquo;t really slowed down enough to look at. I think one of the things I appreciated most about working with her is that she never made me feel like I needed to be &ldquo;fixed.&rdquo; Instead, our sessions gave me space to actually think through things I normally would have brushed past or talked myself out of.</p>
-          <p style="font-family: var(--font-body); font-size: clamp(0.95rem, 1.4vw, 1.05rem); line-height: 1.8; color: rgba(255,255,255,0.82); font-style: italic; margin: 0;">After six sessions, I feel like I understand myself better, especially when it comes to what I want, what I&rsquo;ve been avoiding, and the way I want to move through this next chapter of my life. Koda is warm, easy to talk to, and really good at asking the question underneath the question. I enjoyed working with her enough that I decided to continue after our initial sessions ended, which probably says the most.&rdquo;</p>
+      <figure class="testimonial-card">
+        <blockquote>
+          <p>&ldquo;I started working with Koda at a point where I had already made a lot of big changes in my life, but there were still parts of myself I hadn&rsquo;t really slowed down enough to look at. I think one of the things I appreciated most about working with her is that she never made me feel like I needed to be &ldquo;fixed.&rdquo; Instead, our sessions gave me space to actually think through things I normally would have brushed past or talked myself out of.</p>
+          <p>After six sessions, I feel like I understand myself better, especially when it comes to what I want, what I&rsquo;ve been avoiding, and the way I want to move through this next chapter of my life. Koda is warm, easy to talk to, and really good at asking the question underneath the question. I enjoyed working with her enough that I decided to continue after our initial sessions ended, which probably says the most.&rdquo;</p>
         </blockquote>
-        <figcaption style="font-family: var(--font-display); font-size: 0.88rem; font-weight: 600; color: var(--sea-glass); letter-spacing: 0.06em; text-transform: uppercase;">Britt &mdash; Client</figcaption>
+        <figcaption>Britt &mdash; Client</figcaption>
       </figure>
 
+      <figure class="testimonial-card">
+        <blockquote>
+          <p>&ldquo;I wanted to thank you for the coaching experience, Koda. Going in, I wasn&rsquo;t sure what to expect, but you created such a warm and non-judgmental space. I genuinely felt listened to, maybe for the first time in a long time.</p>
+          <p>You have a real gift for helping someone make sense of their own thoughts. The way you go in-depth about certain situations really makes you see things from a different perspective, and that&rsquo;s exactly what I needed. You helped me understand myself so much better, and I&rsquo;m incredibly grateful for your support.</p>
+          <p>You helped pull me out of a dark place and into a better one. Thank you again for our sessions and for being such a safe space. You&rsquo;ve helped me more than you know.&rdquo;</p>
+        </blockquote>
+        <figcaption>Saskia &mdash; Client</figcaption>
+      </figure>
+
+      <figure class="testimonial-card">
+        <blockquote>
+          <p>&ldquo;I came to Koda at a point where I had a lot going on in my head, but wasn&rsquo;t necessarily sure how to make sense of it all. What surprised me was how naturally the conversations flowed. Koda has a way of asking a seemingly simple question that makes you stop and think, and then suddenly you&rsquo;re looking at something you&rsquo;ve been doing or feeling for years from a completely different angle.</p>
+          <p>She&rsquo;s also really good at noticing patterns. There were a few times where she pointed something out that I hadn&rsquo;t consciously connected before, and once you see it, you can&rsquo;t really unsee it.</p>
+          <p>I&rsquo;d describe the experience as having someone help you untangle your own thoughts rather than giving you a list of things to fix. I came away with a much clearer understanding of myself and a few things I&rsquo;m still thinking about long after the sessions ended.&rdquo;</p>
+        </blockquote>
+        <figcaption>Anonymous &mdash; Client</figcaption>
+      </figure>
+
+    </div>
+    </div>
+
+    <div class="testimonials-nav">
+      <button class="testimonials-btn" id="test-prev" aria-label="Previous">&#8592;</button>
+      <button class="testimonials-btn" id="test-next" aria-label="Next">&#8594;</button>
     </div>
 
   </div>
@@ -1900,6 +1996,33 @@ Both deserve attention.</p>
       if (next) next.addEventListener('click', () => grid.scrollBy({ left:  cardWidth(), behavior: 'smooth' }));
 
       /* Click-and-drag */
+      let isDown = false, startX, scrollLeft;
+      grid.addEventListener('mousedown', e => {
+        isDown = true; grid.classList.add('is-dragging');
+        startX = e.pageX - grid.offsetLeft; scrollLeft = grid.scrollLeft;
+      });
+      grid.addEventListener('mouseleave', () => { isDown = false; grid.classList.remove('is-dragging'); });
+      grid.addEventListener('mouseup',    () => { isDown = false; grid.classList.remove('is-dragging'); });
+      grid.addEventListener('mousemove',  e => {
+        if (!isDown) return; e.preventDefault();
+        const x = e.pageX - grid.offsetLeft;
+        grid.scrollLeft = scrollLeft - (x - startX) * 1.2;
+      });
+    })();
+  </script>
+
+  <script>
+    /* ── Testimonials carousel ── */
+    (function () {
+      const grid = document.getElementById('testimonials-grid');
+      if (!grid) return;
+
+      const prev = document.getElementById('test-prev');
+      const next = document.getElementById('test-next');
+      const cardWidth = () => grid.querySelector('.testimonial-card').offsetWidth + 24;
+      if (prev) prev.addEventListener('click', () => grid.scrollBy({ left: -cardWidth(), behavior: 'smooth' }));
+      if (next) next.addEventListener('click', () => grid.scrollBy({ left:  cardWidth(), behavior: 'smooth' }));
+
       let isDown = false, startX, scrollLeft;
       grid.addEventListener('mousedown', e => {
         isDown = true; grid.classList.add('is-dragging');
