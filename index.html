@@ -1558,7 +1558,31 @@
     .nav-drawer a { transition: color 0.25s ease; }
     .nav-drawer a:hover, .nav-drawer a:focus-visible, .nav-drawer a:active { color: var(--deep); }
     html.sparkle .nav-drawer a:hover, html.sparkle .nav-drawer a:focus-visible, html.sparkle .nav-drawer a:active { color: var(--butter); }
-        html.sparkle .philosophy-quote { color: var(--ink); }
+        /* Sparkle button: star burst when sparkle turns on (same as the studio site) */
+    .spark {
+      position: fixed; z-index: 400; pointer-events: none;
+      left: 0; top: 0; width: var(--s); height: var(--s);
+      animation: spark-fly var(--d) cubic-bezier(.15,.8,.3,1) forwards;
+    }
+    .spark svg { width: 100%; height: 100%; display: block; }
+    @keyframes spark-fly {
+      0%   { transform: translate(var(--x0), var(--y0)) scale(0) rotate(0deg); opacity: 1; }
+      60%  { opacity: 1; }
+      100% { transform: translate(var(--x1), var(--y1)) scale(1) rotate(var(--r)); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { .spark { display: none; } }
+    /* About: flowing "current lines" in the background (same as the studio site's Highlighted work) */
+    .about { position: relative; overflow: hidden; }
+    .about > .container { position: relative; z-index: 1; }
+    /* The note box is solid, so the moving lines don't show through it */
+    .about-note { background: linear-gradient(rgba(15,45,58,0.05), rgba(15,45,58,0.05)), var(--page-bg); }
+    .about .caustics {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+    }
+    html.sparkle .philosophy-quote { color: var(--ink); }
     html.sparkle .philosophy-quote em { color: var(--butter); }
     html.sparkle .contact .what-next-label { color: var(--butter) !important; } /* Koda's choice: butter label (2.5:1 on vista) */
     html.sparkle .philosophy-closing { border-top-color: rgba(15,45,58,0.25) !important; }
@@ -1874,6 +1898,7 @@ Both deserve attention.</p>
      ABOUT
 ════════════════════════════════════════ -->
 <section class="about section-pad" id="about" aria-labelledby="about-heading">
+  <canvas class="caustics" aria-hidden="true"></canvas>
   <div class="container">
     <div class="about-grid">
 
@@ -2483,12 +2508,167 @@ Both deserve attention.</p>
           }
         }
       };
+      const STAR = 'M12 0C13 8 16 11 24 12 16 13 13 16 12 24 11 16 8 13 0 12 8 11 11 8 12 0Z';
+      const COLORS = ['#78a2d2', '#feffaf', '#f5f1e8', '#2f5f99'];
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function burst() {
+        if (reduceMotion) return;
+        const origin = (btn.querySelector('.star') || btn).getBoundingClientRect();
+        const cx = origin.left + origin.width / 2, cy = origin.top + origin.height / 2;
+        for (let i = 0; i < 14; i++) {
+          const el = document.createElement('span');
+          el.className = 'spark';
+          el.setAttribute('aria-hidden', 'true');
+          const a = Math.PI * (1.05 + Math.random() * 0.45);   // fly up and to the left, away from the corner
+          const dist = 70 + Math.random() * 120;
+          const s = 10 + Math.random() * 14;
+          el.style.cssText = '--s:' + s + 'px;--d:' + (0.9 + Math.random() * 0.6) + 's;--r:' + ((Math.random() * 180 - 90) | 0) + 'deg;' +
+            '--x0:' + (cx - s / 2) + 'px;--y0:' + (cy - s / 2) + 'px;' +
+            '--x1:' + (cx - s / 2 + Math.cos(a) * dist) + 'px;--y1:' + (cy - s / 2 + Math.sin(a) * dist) + 'px';
+          el.innerHTML = '<svg viewBox="0 0 24 24"><path d="' + STAR + '" fill="' + COLORS[i % COLORS.length] + '"/></svg>';
+          document.body.appendChild(el);
+          el.addEventListener('animationend', function() { el.remove(); });
+        }
+      }
       btn.addEventListener('click', function() {
         const on = document.documentElement.classList.toggle('sparkle');
+        if (on) burst();
         try { sessionStorage.setItem('cc-sparkle', on ? 'on' : 'off'); } catch(e) {}
         sync();
       });
       sync();
+    })();
+  </script>
+  <script>
+    // About background: hairline "current lines" that flow on their own; the cursor sends soft ripples through them
+    (function () {
+      const canvas = document.querySelector('.about .caustics');
+      if (!canvas || !canvas.getContext) return;
+      const ctx = canvas.getContext('2d');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const SEP = 64, STEP = 6, WIDTH = 1.3;
+      const t0 = performance.now();
+      const now = () => (performance.now() - t0) / 1000;
+      let lines = [], dpr = 1, W = 0, H = 0;
+      const angle = (x, y) => 0.35 + 0.55 * Math.sin(x * 0.0019 + y * 0.0013) + 0.3 * Math.sin(y * 0.0036 - x * 0.0011);
+
+      const ripples = [];
+      const RING_SPEED = 110, RING_WIDTH = 70, RIPPLE_AMP = 9, RIPPLE_LIFE = 4.5;
+      let last = null;
+      canvas.parentNode.addEventListener('pointermove', function (e) {
+        if (reduce) return;
+        const r = canvas.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top, t = now();
+        if (last && Math.hypot(x - last.x, y - last.y) < 110 && t - last.t < .6) return;
+        last = { x: x, y: y, t: t };
+        ripples.push({ x: x, y: y, t: t });
+        if (ripples.length > 6) ripples.shift();
+        start();
+      });
+
+      function build() {
+        lines = [];
+        const cell = SEP * 0.6;
+        const cols = Math.ceil(W / cell) + 1, rows = Math.ceil(H / cell) + 1;
+        const taken = new Uint8Array(cols * rows);
+        const free = function (x, y) {
+          if (x < -40 || y < -40 || x > W + 40 || y > H + 40) return false;
+          const cx = Math.floor(x / cell), cy = Math.floor(y / cell);
+          for (let j = -1; j <= 1; j++) for (let i = -1; i <= 1; i++) {
+            const c = cx + i, r = cy + j;
+            if (c >= 0 && r >= 0 && c < cols && r < rows && taken[r * cols + c]) return false;
+          }
+          return true;
+        };
+        const mark = function (pts) { pts.forEach(function (p) {
+          const c = Math.floor(p[0] / cell), r = Math.floor(p[1] / cell);
+          if (c >= 0 && r >= 0 && c < cols && r < rows) taken[r * cols + c] = 1;
+        }); };
+        const seeds = [];
+        for (let y = -20; y < H + 20; y += SEP) for (let x = -20; x < W + 20; x += SEP)
+          seeds.push([x + (Math.random() - .5) * SEP, y + (Math.random() - .5) * SEP]);
+        seeds.sort(function () { return Math.random() - .5; });
+        seeds.forEach(function (sd) {
+          const sx = sd[0], sy = sd[1];
+          if (!free(sx, sy)) return;
+          const trace = function (dir) {
+            const pts = []; let x = sx, y = sy;
+            for (let k = 0; k < 400; k++) {
+              const a = angle(x, y);
+              x += Math.cos(a) * STEP * dir; y += Math.sin(a) * STEP * dir;
+              if (!free(x, y)) break;
+              pts.push([x, y]);
+            }
+            return pts;
+          };
+          const pts = trace(-1).reverse().concat([[sx, sy]], trace(1));
+          if (pts.length < 30) return;
+          mark(pts);
+          const s = [0], nx = [], ny = [];
+          for (let i = 0; i < pts.length; i++) {
+            const a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)];
+            const dx = b[0] - a[0], dy = b[1] - a[1], len = Math.hypot(dx, dy) || 1;
+            nx.push(-dy / len); ny.push(dx / len);
+            if (i) s.push(s[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+          }
+          const dash = 260 + Math.random() * 420, gap = 18 + Math.random() * 30;
+          lines.push({ pts: pts, s: s, nx: nx, ny: ny,
+            dash: [dash, gap, dash * (.3 + Math.random() * .4), gap],
+            off: Math.random() * 600, speed: 18 + Math.random() * 10, phase: Math.random() * 6.28 });
+        });
+      }
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = canvas.clientWidth; H = canvas.clientHeight;
+        canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+        build();
+        draw(reduce ? 0 : now());
+      }
+
+      function draw(t) {
+        const sparkle = document.documentElement.classList.contains('sparkle');
+        while (ripples.length && t - ripples[0].t > RIPPLE_LIFE) ripples.shift();
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.lineWidth = WIDTH;
+        ctx.strokeStyle = sparkle ? 'rgba(120,162,210,.55)' : 'rgba(15,45,58,.14)';
+        lines.forEach(function (l) {
+          const n = l.pts.length, p = new Array(n);
+          for (let i = 0; i < n; i++) {
+            let x = l.pts[i][0], y = l.pts[i][1];
+            const w = Math.sin(l.s[i] * .009 - t * 1.0 + l.phase) * 5 + Math.sin(l.s[i] * .021 - t * 1.6 + l.phase * 2) * 1.6;
+            x += l.nx[i] * w; y += l.ny[i] * w;
+            for (let k = 0; k < ripples.length; k++) {
+              const r = ripples[k], age = t - r.t;
+              const dx = x - r.x, dy = y - r.y, d = Math.hypot(dx, dy) || 1;
+              const dd = d - age * RING_SPEED;
+              const env = Math.exp(-(dd * dd) / (2 * RING_WIDTH * RING_WIDTH)) * Math.exp(-age * .8) * Math.min(1, age * 3);
+              if (env < .002) continue;
+              const lift = Math.sin(dd * .045) * RIPPLE_AMP * env;
+              x += dx / d * lift; y += dy / d * lift;
+            }
+            p[i] = [x, y];
+          }
+          ctx.setLineDash(l.dash);
+          ctx.lineDashOffset = l.off - t * l.speed;
+          ctx.beginPath();
+          ctx.moveTo(p[0][0], p[0][1]);
+          for (let i = 1; i < n - 1; i++) {
+            ctx.quadraticCurveTo(p[i][0], p[i][1], (p[i][0] + p[i + 1][0]) / 2, (p[i][1] + p[i + 1][1]) / 2);
+          }
+          ctx.stroke();
+        });
+      }
+
+      new ResizeObserver(resize).observe(canvas);
+      let visible = false, raf = 0;
+      const loop = function () { if (!visible) { raf = 0; return; } draw(now()); raf = requestAnimationFrame(loop); };
+      function start() { if (visible && !raf && !reduce) raf = requestAnimationFrame(loop); }
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; start(); }).observe(canvas);
+      new MutationObserver(function () { draw(reduce ? 0 : now()); })
+        .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     })();
   </script>
 </body>
