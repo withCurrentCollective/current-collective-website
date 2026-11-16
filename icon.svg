@@ -1,11 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <style>
-    .bg   { fill: #ffffff; }
-    .mark { fill: #78A2D2; }
-    @media (prefers-color-scheme: dark) {
-      .bg   { fill: #0F2D3A; }
-      .mark { fill: #FEFFAF; }
-    }
+    .bg   { fill: #F5F1E8; }   /* paper */
+    .mark { fill: #78A2D2; }   /* vista */
   </style>
   <!-- Square background -->
   <rect class="bg" width="100" height="100" rx="18"/>
